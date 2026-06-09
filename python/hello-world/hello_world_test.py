@@ -25,6 +25,7 @@ except ImportError as import_fail:
 
 
 class HelloWorldTest(unittest.TestCase):
-    def test_say_hi(self):
-        msg = "\n\nThis test expects a return of the string 'Hello, World!' \nDid you use print('Hello, World!') by mistake?"
-        self.assertEqual(hello(), "Hello, World!", msg=msg)
+    def test_say_hi(self) -> None:
+        msg = ("\n\nThis test expects a return of the string 'Hello, World!' \n"
+            "Did you use print('Hello, World!') by mistake?")
+        assert hello() == "Hello, World!", msg
