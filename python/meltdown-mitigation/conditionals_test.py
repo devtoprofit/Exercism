@@ -1,8 +1,7 @@
 import unittest
+
 import pytest
-from conditionals import (is_criticality_balanced,
-                          reactor_efficiency,
-                          fail_safe)
+from conditionals import fail_safe, is_criticality_balanced, reactor_efficiency
 
 
 class MeltdownMitigationTest(unittest.TestCase):
@@ -10,7 +9,7 @@ class MeltdownMitigationTest(unittest.TestCase):
     """
 
     @pytest.mark.task(taskno=1)
-    def test_is_criticality_balanced(self):
+    def test_is_criticality_balanced(self) -> None:
         """Testing border cases around typical points.
 
         T, n == (800, 500), (625, 800), (500, 1000), etc.
@@ -26,7 +25,8 @@ class MeltdownMitigationTest(unittest.TestCase):
 
         for variant, data in enumerate(test_data, start=1):
             temp, neutrons_emitted, expected = data
-            with self.subTest(f'variation #{variant}', temp=temp, neutrons_emitted=neutrons_emitted, expected=expected):
+            with self.subTest(f'variation #{variant}', temp=temp,
+                              neutrons_emitted=neutrons_emitted, expected=expected):
 
                 # pylint: disable=assignment-from-no-return
                 actual_result = is_criticality_balanced(temp, neutrons_emitted)
@@ -34,10 +34,10 @@ class MeltdownMitigationTest(unittest.TestCase):
                                    f' The function returned {actual_result}, '
                                    f'but the test expected {expected} as the return value.')
 
-                self.assertEqual(actual_result, expected, failure_message)
+                assert actual_result == expected, failure_message
 
     @pytest.mark.task(taskno=2)
-    def test_reactor_efficiency(self):
+    def test_reactor_efficiency(self) -> None:
         voltage = 10
         theoretical_max_power = 10000
 
@@ -54,14 +54,15 @@ class MeltdownMitigationTest(unittest.TestCase):
 
                 # pylint: disable=assignment-from-no-return
                 actual_result = reactor_efficiency(voltage, current, theoretical_max_power)
-                failure_message =(f'Called reactor_efficiency({voltage}, {current}, {theoretical_max_power}). '
+                failure_message =(f'Called reactor_efficiency({voltage}, {current}, '
+                                  f'{theoretical_max_power}). '
                                   f'The function returned {actual_result}, '
                                   f'but the test expected {expected} as the return value.')
 
-                self.assertEqual(actual_result, expected, failure_message)
+                assert actual_result == expected, failure_message
 
     @pytest.mark.task(taskno=3)
-    def test_fail_safe(self):
+    def test_fail_safe(self) -> None:
         temp = 10
         threshold = 10000
         test_data = ((399, 'LOW'), (300, 'LOW'), (1, 'LOW'),
@@ -70,7 +71,8 @@ class MeltdownMitigationTest(unittest.TestCase):
                      (400, 'LOW'), (1101, 'DANGER'), (1200, 'DANGER'))
 
         for variant, (neutrons_per_second, expected) in enumerate(test_data, start=1):
-            with self.subTest(f'variation #{variant}', temp=temp, neutrons_per_second=neutrons_per_second,
+            with self.subTest(f'variation #{variant}', temp=temp,
+                              neutrons_per_second=neutrons_per_second,
                               threshold=threshold, expected=expected):
 
                 # pylint: disable=assignment-from-no-return
@@ -79,4 +81,4 @@ class MeltdownMitigationTest(unittest.TestCase):
                                    f'The function returned {actual_result}, '
                                    f'but the test expected {expected} as the return value.')
 
-                self.assertEqual(actual_result, expected, failure_message)
+                assert actual_result == expected, failure_message

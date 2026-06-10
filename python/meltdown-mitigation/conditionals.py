@@ -1,7 +1,14 @@
 """Functions to prevent a nuclear meltdown."""
 
 
-def is_criticality_balanced(temperature, neutrons_emitted):
+from typing import Literal
+
+type Number = int | float
+type StatusCode = Literal["LOW", "NORMAL", "DANGER"]
+type Zone = Literal["green", "orange", "red", "black"]
+
+
+def is_criticality_balanced(temperature: Number, neutrons_emitted: Number) -> bool:
     """Verify criticality is balanced.
 
     Parameters:
@@ -19,10 +26,10 @@ def is_criticality_balanced(temperature, neutrons_emitted):
 
     """
 
-    pass
+    return temperature < 800 and neutrons_emitted > 500 and temperature * neutrons_emitted < 500000
 
 
-def reactor_efficiency(voltage, current, theoretical_max_power):
+def reactor_efficiency(voltage: Number, current: Number, theoretical_max_power: Number) -> Zone:
     """Assess reactor efficiency zone.
 
     Parameters:
@@ -31,7 +38,7 @@ def reactor_efficiency(voltage, current, theoretical_max_power):
         theoretical_max_power (int or float): The power level that corresponds to a 100% efficiency.
 
     Returns:
-        str: One of ('green', 'orange', 'red', or 'black').
+        str: One of ("green", "orange", "red", or "black").
 
     Note:
         Efficiency can be grouped into 4 bands:
@@ -45,10 +52,23 @@ def reactor_efficiency(voltage, current, theoretical_max_power):
         where generated power = voltage * current
     """
 
-    pass
+    efficiency = voltage * current * 100 / theoretical_max_power
+
+    if efficiency < 30:
+        zone = "black"
+    elif efficiency < 60:
+        zone = "red"
+    elif efficiency < 80:
+        zone = "orange"
+    else:
+        zone = "green"
+    
+    return zone
 
 
-def fail_safe(temperature, neutrons_produced_per_second, threshold):
+def fail_safe(temperature: Number,
+              neutrons_produced_per_second:Number,
+              threshold: Number) -> StatusCode:
     """Assess and return status code for the reactor.
 
     Parameters:
@@ -57,12 +77,23 @@ def fail_safe(temperature, neutrons_produced_per_second, threshold):
         threshold (int or float): The threshold for the category.
 
     Returns:
-        str: One of ('LOW', 'NORMAL', 'DANGER').
+        str: One of ("LOW", "NORMAL", "DANGER").
 
     Note:
-        1. 'LOW' -> `temperature * neutrons per second` < 90% of `threshold`
-        2. 'NORMAL' -> `temperature * neutrons per second` +/- 10% of `threshold`
-        3. 'DANGER' -> `temperature * neutrons per second` is not in the above-stated ranges
+        1. "LOW" -> `temperature * neutrons per second` < 90% of `threshold`
+        2. "NORMAL" -> `temperature * neutrons per second` +/- 10% of `threshold`
+        3. "DANGER" -> `temperature * neutrons per second` is not in the above-stated ranges
     """
 
-    pass
+    condition = temperature * neutrons_produced_per_second
+    min_bound = threshold * 0.9
+    max_bound = threshold * 1.1
+
+    if condition < min_bound:
+        status_code = "LOW"
+    elif min_bound <= condition <= max_bound:
+        status_code = "NORMAL"
+    else:
+        status_code = "DANGER"
+    
+    return status_code
