@@ -1,7 +1,7 @@
 """Functions for creating, transforming, and adding prefixes to strings."""
 
 
-def add_prefix_un(word):
+def add_prefix_un(word: str) -> str:
     """Take the given word and add the 'un' prefix.
 
     Parameters:
@@ -11,10 +11,10 @@ def add_prefix_un(word):
         str: Root word prepended with 'un'.
     """
 
-    pass
+    return "un" + word
 
 
-def make_word_groups(vocab_words):
+def make_word_groups(vocab_words: list[str]) -> str:
     """Transform a list containing a prefix and words.
 
     Parameters:
@@ -32,10 +32,10 @@ def make_word_groups(vocab_words):
 
     """
 
-    pass
+    return f" :: {vocab_words[0]}".join(vocab_words)
 
 
-def remove_suffix_ness(word):
+def remove_suffix_ness(word: str) -> str:
     """Remove the suffix from the word while keeping spelling in mind.
 
     Parameters:
@@ -53,10 +53,11 @@ def remove_suffix_ness(word):
 
     """
 
-    pass
+    original_word = word[: -4]
+    return original_word if not original_word.endswith("i") else original_word[: -1] + "y"
 
 
-def adjective_to_verb(sentence, index):
+def adjective_to_verb(sentence: str, index: int) -> str:
     """Change the adjective within the sentence to a verb.
 
     Parameters:
@@ -74,5 +75,5 @@ def adjective_to_verb(sentence, index):
         'blacken'
 
     """
-
-    pass
+    word = sentence.split()[index].strip(",.;:!?")
+    return word + "en"
