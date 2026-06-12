@@ -5,7 +5,15 @@ How to play blackjack:    https://bicyclecards.com/how-to-play/blackjack/
 """
 
 
-def value_of_card(card):
+ACE_CARD = "A"
+ACE_MAX_SCORE = 11
+ACE_MIN_SCORE = 1
+BLACKJACK = 21
+DOUBLE_POINTS = [9, 10, 11]
+TEN_CARDS = ["10", "J", "Q", "K"]
+
+
+def value_of_card(card: str) -> int:
     """Determine the scoring value of a card.
 
     Parameters:
@@ -19,10 +27,17 @@ def value_of_card(card):
         3.  '2' - '10' = numerical value.
     """
 
-    pass
+    if card == ACE_CARD:
+        value = 1
+    elif card in TEN_CARDS:
+        value = 10
+    else:
+        value = int(card)
+    
+    return value
 
 
-def higher_card(card_one, card_two):
+def higher_card(card_one: str, card_two: str) -> str | tuple[str, str]:
     """Determine which card has a higher value in the hand.
 
     Parameters:
@@ -37,10 +52,16 @@ def higher_card(card_one, card_two):
         str or tuple: The resulting tuple contains both cards if they are of equal value.
     """
 
-    pass
+    card_one_value = value_of_card(card_one)
+    card_two_value = value_of_card(card_two)
+
+    if card_one_value == card_two_value:
+        return card_one, card_two
+    
+    return card_one if card_one_value > card_two_value else card_two
 
 
-def value_of_ace(card_one, card_two):
+def value_of_ace(card_one: str, card_two: str) -> int:
     """Calculate the most advantageous value for an upcoming ace card.
 
     Parameters:
@@ -55,10 +76,15 @@ def value_of_ace(card_one, card_two):
         int: Either 1 or 11, which is the value of the upcoming ace card.
     """
 
-    pass
+    if ACE_CARD in (card_one, card_two):
+        return ACE_MIN_SCORE
+    
+    current_score = value_of_card(card_one) + value_of_card(card_two)
+
+    return ACE_MAX_SCORE if BLACKJACK - current_score >= ACE_MAX_SCORE else ACE_MIN_SCORE
 
 
-def is_blackjack(card_one, card_two):
+def is_blackjack(card_one: str, card_two: str) -> bool:
     """Determine if the hand is a 'natural' or 'blackjack'.
 
     Parameters:
@@ -73,10 +99,10 @@ def is_blackjack(card_one, card_two):
         bool: Is the hand is a blackjack (two cards worth 21).
     """
 
-    pass
+    return ACE_CARD in (card_one, card_two) and (card_one in TEN_CARDS or card_two in TEN_CARDS)
 
 
-def can_split_pairs(card_one, card_two):
+def can_split_pairs(card_one: str, card_two: str) -> bool:
     """Determine if a player can split their hand into two hands.
 
     Parameters:
@@ -87,10 +113,10 @@ def can_split_pairs(card_one, card_two):
         bool: Can the hand be split into two pairs? (i.e. cards are of the same value).
     """
 
-    pass
+    return value_of_card(card_one) == value_of_card(card_two)
 
 
-def can_double_down(card_one, card_two):
+def can_double_down(card_one: str, card_two: str) -> bool:
     """Determine if a blackjack player can place a double down bet.
 
     Parameters:
@@ -101,4 +127,6 @@ def can_double_down(card_one, card_two):
         bool: Can the hand can be doubled down? (i.e. totals 9, 10 or 11 points).
     """
 
-    pass
+    total_score = value_of_card(card_one) + value_of_card(card_two)
+
+    return total_score in DOUBLE_POINTS
