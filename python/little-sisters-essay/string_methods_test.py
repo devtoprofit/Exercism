@@ -1,15 +1,18 @@
 import unittest
+
 import pytest
-from string_methods import (capitalize_title,
-                            check_sentence_ending,
-                            clean_up_spacing,
-                            replace_word_choice)
+from string_methods import (
+    capitalize_title,
+    check_sentence_ending,
+    clean_up_spacing,
+    replace_word_choice,
+)
 
 
 class LittleSistersEssayTest(unittest.TestCase):
 
     @pytest.mark.task(taskno=1)
-    def test_capitalize_word(self):
+    def test_capitalize_word(self) -> None:
 
         actual_result = capitalize_title("canopy")
         expected = "Canopy"
@@ -17,10 +20,10 @@ class LittleSistersEssayTest(unittest.TestCase):
                          f'The function returned "{actual_result}", '
                          f'but the tests expected "{expected}" for the title.')
 
-        self.assertEqual(actual_result, expected, msg=error_message)
+        assert actual_result == expected, error_message
 
     @pytest.mark.task(taskno=1)
-    def test_capitalize_title(self):
+    def test_capitalize_title(self) -> None:
 
         actual_result = capitalize_title("fish are cold blooded")
         expected = "Fish Are Cold Blooded"
@@ -28,10 +31,10 @@ class LittleSistersEssayTest(unittest.TestCase):
                          f'The function returned "{actual_result}", '
                          f'but the tests expected "{expected}" for the title.')
 
-        self.assertEqual(actual_result, expected, msg=error_message)
+        assert actual_result == expected, error_message
 
     @pytest.mark.task(taskno=2)
-    def test_sentence_ending(self):
+    def test_sentence_ending(self) -> None:
 
         actual_result = check_sentence_ending("Snails can sleep for 3 years.")
         expected = True
@@ -39,10 +42,10 @@ class LittleSistersEssayTest(unittest.TestCase):
                          f'The function returned {actual_result}, '
                          f'but the tests expected {expected} for a period ending.')
 
-        self.assertEqual(actual_result, expected, msg=error_message)
+        assert actual_result == expected, error_message
 
     @pytest.mark.task(taskno=2)
-    def test_sentence_ending_without_period(self):
+    def test_sentence_ending_without_period(self) -> None:
 
         actual_result = check_sentence_ending("Fittonia are nice")
         expected = False
@@ -50,10 +53,10 @@ class LittleSistersEssayTest(unittest.TestCase):
                          f'The function returned {actual_result}, '
                          f'but the tests expected {expected} for a period ending.')
 
-        self.assertEqual(actual_result, expected, msg=error_message)
+        assert actual_result == expected, error_message
 
     @pytest.mark.task(taskno=3)
-    def test_remove_extra_spaces_only_start(self):
+    def test_remove_extra_spaces_only_start(self) -> None:
 
         actual_result = clean_up_spacing("  A rolling stone gathers no moss")
         expected = "A rolling stone gathers no moss"
@@ -61,10 +64,10 @@ class LittleSistersEssayTest(unittest.TestCase):
                          f'The function returned "{actual_result}", '
                          f'but the tests expected "{expected}" as a cleaned string.')
 
-        self.assertEqual(actual_result, expected, msg=error_message)
+        assert actual_result == expected, error_message
 
     @pytest.mark.task(taskno=3)
-    def test_remove_extra_spaces(self):
+    def test_remove_extra_spaces(self) -> None:
 
         actual_result = clean_up_spacing("  Elephants can't jump.  ")
         expected = "Elephants can't jump."
@@ -72,10 +75,10 @@ class LittleSistersEssayTest(unittest.TestCase):
                          f'The function returned "{actual_result}", '
                          f'but the tests expected "{expected}" as a cleaned string.')
 
-        self.assertEqual(actual_result, expected, msg=error_message)
+        assert actual_result == expected, error_message
 
     @pytest.mark.task(taskno=4)
-    def test_replace_word_choice(self):
+    def test_replace_word_choice(self) -> None:
 
         actual_result = replace_word_choice("Animals are cool.", "cool", "awesome")
         expected = "Animals are awesome."
@@ -83,10 +86,10 @@ class LittleSistersEssayTest(unittest.TestCase):
                          f'The function returned "{actual_result}", '
                          f'but the tests expected "{expected}" after the word replacement.')
 
-        self.assertEqual(actual_result, expected, msg=error_message)
+        assert actual_result == expected, error_message
 
     @pytest.mark.task(taskno=4)
-    def test_replace_word_not_exist(self):
+    def test_replace_word_not_exist(self) -> None:
 
         actual_result = replace_word_choice("Animals are cool.", "small", "tiny")
         expected = "Animals are cool."
@@ -95,4 +98,4 @@ class LittleSistersEssayTest(unittest.TestCase):
                          f'but the tests expected "{expected}", because the word '
                          'to be replaced is not in the sentence.')
 
-        self.assertEqual(actual_result, expected, msg=error_message)
+        assert actual_result == expected, error_message
