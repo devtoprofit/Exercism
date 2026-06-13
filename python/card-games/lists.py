@@ -4,7 +4,7 @@ Python list documentation: https://docs.python.org/3/tutorial/datastructures.htm
 """
 
 
-def get_rounds(number):
+def get_rounds(number: int) -> list[int]:
     """Create a list containing the current and next two round numbers.
 
     Parameters:
@@ -14,10 +14,10 @@ def get_rounds(number):
         list: The current round number and the two that follow.
     """
 
-    pass
+    return list(range(number, number + 3))
 
 
-def concatenate_rounds(rounds_1, rounds_2):
+def concatenate_rounds(rounds_1: list[int], rounds_2: list[int]) -> list[int]:
     """Concatenate two lists of round numbers.
 
     Parameters:
@@ -28,10 +28,10 @@ def concatenate_rounds(rounds_1, rounds_2):
         list:  All rounds played.
     """
 
-    pass
+    return rounds_1 + rounds_2
 
 
-def list_contains_round(rounds, number):
+def list_contains_round(rounds: list[int], number: int) -> bool:
     """Check if the list of rounds contains the specified number.
 
     Parameters:
@@ -42,10 +42,10 @@ def list_contains_round(rounds, number):
         bool: Was the round played?
     """
 
-    pass
+    return number in rounds
 
 
-def card_average(hand):
+def card_average(hand: list[int]) -> float:
     """Calculate and returns the average card value from the list.
 
     Parameters:
@@ -55,11 +55,12 @@ def card_average(hand):
         float: The average value of the cards in the hand.
     """
 
-    pass
+    return sum(hand) / len(hand)
 
 
-def approx_average_is_average(hand):
-    """Return if the (average of first and last card values) OR ('middle' card) == calculated average.
+def approx_average_is_average(hand: list[int]) -> bool:
+    """Return if the (average of first and last card values)
+    OR ('middle' card) == calculated average.
 
     Parameters:
         hand (list): The cards in the hand.
@@ -68,10 +69,14 @@ def approx_average_is_average(hand):
         bool: Does one of the approximate averages equal the `true average`?
     """
 
-    pass
+    average = card_average(hand)
+    average_first_and_last = (hand[0] + hand[-1]) / 2
+    middle_card = len(hand) // 2
+
+    return average in (average_first_and_last, hand[middle_card])
 
 
-def average_even_is_average_odd(hand):
+def average_even_is_average_odd(hand: list[int]) -> bool:
     """Return if the (average of even indexed card values) == (average of odd indexed card values).
 
     Parameters:
@@ -81,10 +86,10 @@ def average_even_is_average_odd(hand):
         bool: Are the even and odd averages equal?
     """
 
-    pass
+    return card_average(hand[::2]) == card_average(hand[1::2])
 
 
-def maybe_double_last(hand):
+def maybe_double_last(hand: list[int]) -> list[int]:
     """Multiply a Jack card value in the last index position by 2.
 
     Parameters:
@@ -94,4 +99,7 @@ def maybe_double_last(hand):
         list: The hand with Jacks (if present) value doubled.
     """
 
-    pass
+    if hand[-1] == 11:
+        hand[-1] = 22
+    
+    return hand
