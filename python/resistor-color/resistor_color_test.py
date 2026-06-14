@@ -11,16 +11,16 @@ from resistor_color import (
 
 
 class ResistorColorTest(unittest.TestCase):
-    def test_black(self):
-        self.assertEqual(color_code("black"), 0)
+    def test_black(self) -> None:
+        assert color_code("black") == 0
 
-    def test_white(self):
-        self.assertEqual(color_code("white"), 9)
+    def test_white(self) -> None:
+        assert color_code("white") == 9
 
-    def test_orange(self):
-        self.assertEqual(color_code("orange"), 3)
+    def test_orange(self) -> None:
+        assert color_code("orange") == 3
 
-    def test_colors(self):
+    def test_colors(self) -> None:
         expected = [
             "black",
             "brown",
@@ -33,4 +33,4 @@ class ResistorColorTest(unittest.TestCase):
             "grey",
             "white",
         ]
-        self.assertEqual(colors(), expected)
+        assert colors() == expected
