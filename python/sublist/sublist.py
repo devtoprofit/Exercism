@@ -48,20 +48,16 @@ def sublist(list_one: list[Any], list_two: list[Any]) -> int:
     
     len_inner_list = len(inner_list)
 
-    while True:
-        if inner_list[0] in outer_list:
-            start_index = outer_list.index(inner_list[0])
-            outer_list = outer_list[start_index:]
+    while inner_list[0] in outer_list:
+        start_index = outer_list.index(inner_list[0])
+        outer_list = outer_list[start_index:]
 
-            if len_inner_list <= len(outer_list):
+        if len_inner_list <= len(outer_list):
 
-                if inner_list == outer_list[:len_inner_list]:
-                    return category
-                
-                outer_list = outer_list[1:]
-
-            else:
-                break
+            if inner_list == outer_list[:len_inner_list]:
+                return category
+            
+            outer_list = outer_list[1:]
 
         else:
             break
