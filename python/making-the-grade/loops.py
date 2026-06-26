@@ -1,7 +1,7 @@
 """Functions for organizing and calculating student exam scores."""
 
 
-def round_scores(student_scores):
+def round_scores(student_scores: list[float]) -> list[int]:
     """Round all provided student scores.
 
     Parameters:
@@ -11,10 +11,10 @@ def round_scores(student_scores):
         list[int]: Student scores *rounded* to the nearest integer value.
     """
 
-    pass
+    return [round(score) for score in student_scores]
 
 
-def count_failed_students(student_scores):
+def count_failed_students(student_scores: list[int]) -> int:
     """Count the number of failing students out of the group provided.
 
     Parameters:
@@ -24,11 +24,12 @@ def count_failed_students(student_scores):
         int: The count of student scores at or below 40.
     """
 
-    pass
+    return len([score for score in student_scores if score <= 40])
 
 
-def above_threshold(student_scores, threshold):
-    """Determine how many of the provided student scores were 'the best' based on the provided threshold.
+def above_threshold(student_scores: list[int], threshold: int) -> list[int]:
+    """Determine how many of the provided student scores were 'the best'
+    based on the provided threshold.
 
     Parameters:
         student_scores (list[int]): Integer scores.
@@ -38,10 +39,10 @@ def above_threshold(student_scores, threshold):
         list[int]: Integer scores that are at or above the "best" threshold.
     """
 
-    pass
+    return [score for score in student_scores if score >= threshold]
 
 
-def letter_grades(highest):
+def letter_grades(highest: int) -> list[int]:
     """Create a list of grade thresholds based on the provided highest grade.
 
     Parameters:
@@ -58,10 +59,11 @@ def letter_grades(highest):
             86 <= "A" <= 100
     """
 
-    pass
+    grade_interval = (highest - 40) // 4
+    return list(range(41, 100, grade_interval))[:4]
 
 
-def student_ranking(student_scores, student_names):
+def student_ranking(student_scores: list[int], student_names: list[str]) -> list[str]:
     """Organize the student's rank, name, and grade information in descending order.
 
     Parameters:
@@ -72,11 +74,13 @@ def student_ranking(student_scores, student_names):
         list[str]: Strings in format ["<rank>. <student name>: <score>"].
     """
 
-    pass
+    return [f"{rank + 1}. {student_names[rank]}: {student_scores[rank]}"
+            for rank in range(len(student_names))]
 
 
-def perfect_score(student_info):
-    """Create a list that contains the name and grade of the first student to make a perfect score on the exam.
+def perfect_score(student_info: list[list[str | int]]) -> list[str | int]:
+    """Create a list that contains the name and grade of the first student
+    to make a perfect score on the exam.
 
     Parameters:
         student_info (list[list[str, int]]): List of [<student name>, <score>] lists.
@@ -85,4 +89,8 @@ def perfect_score(student_info):
         list: First `[<student name>, 100]` found OR `[]` if no student score of 100 is found.
     """
 
-    pass
+    for student in student_info:
+        if student[1] == 100:
+            return student
+    
+    return []
